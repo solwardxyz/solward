@@ -1,0 +1,21 @@
+{
+  "name": "solward",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The reputation and rewards layer for the Solana builder economy.",
+  "homepage": "https://solward.xyz",
+  "scripts": {
+    "dev": "npx serve public",
+    "start": "npx serve public",
+    "serve": "python3 -m http.server -d public 8080"
+  },
+  "keywords": [
+    "solana",
+    "reputation",
+    "proof-of-contribution",
+    "web3",
+    "easya-kickstart",
+    "bounties"
+  ],
+  "license": "MIT"
+}

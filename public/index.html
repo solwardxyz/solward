@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Solward — The reputation layer for the Solana builder economy</title>
+<meta name="description" content="Solward turns real contributions to Solana projects into verifiable on-chain reputation that earns rewards. The settlement layer for builders." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --green:#0FA968;
+    --green-deep:#0A7D4E;
+    --green-bright:#16C97D;
+    --green-soft:#E7F6EE;
+    --green-mist:#F3FBF7;
+    --ink:#0C2018;
+    --ink-soft:#3A5249;
+    --white:#FFFFFF;
+    --paper:#FAFDFB;
+    --line:rgba(15,169,104,0.14);
+    --line-strong:rgba(15,169,104,0.26);
+    --grad:linear-gradient(105deg,var(--green-deep),var(--green-bright));
+    --shadow:0 24px 60px rgba(10,125,78,0.12);
+    --shadow-sm:0 8px 24px rgba(10,125,78,0.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    position:relative;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:'JetBrains Mono',monospace}
+
+  /* ---------- ANIMATED WAVE BACKGROUND ---------- */
+  .bg-waves{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+  .bg-waves svg{position:absolute;width:120%;height:100%;left:-10%;top:0}
+  .w1{animation:drift 24s ease-in-out infinite}
+  .w2{animation:drift 32s ease-in-out infinite reverse}
+  .w3{animation:drift 40s ease-in-out infinite}
+  @keyframes drift{
+    0%{transform:translateX(0) translateY(0)}
+    50%{transform:translateX(-5%) translateY(14px)}
+    100%{transform:translateX(0) translateY(0)}
+  }
+  .bg-glow{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+  .glow{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.5}
+  .g1{width:520px;height:520px;background:radial-gradient(circle,rgba(22,201,125,0.28),transparent 68%);top:-160px;right:-120px;animation:float1 18s ease-in-out infinite}
+  .g2{width:480px;height:480px;background:radial-gradient(circle,rgba(15,169,104,0.20),transparent 68%);top:42%;left:-160px;animation:float2 22s ease-in-out infinite}
+  .g3{width:420px;height:420px;background:radial-gradient(circle,rgba(10,125,78,0.16),transparent 68%);bottom:-160px;right:10%;animation:float1 26s ease-in-out infinite reverse}
+  @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,30px)}}
+  @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(50px,-30px)}}
+
+  /* ---------- NAV ---------- */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px) saturate(140%);background:rgba(250,253,251,0.78);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .logo{display:flex;align-items:center;gap:11px;font-family:'Space Grotesk';font-weight:700;font-size:20px;letter-spacing:-0.4px;color:var(--ink)}
+  .mark{width:28px;height:28px;border-radius:8px;background:var(--grad);position:relative;flex-shrink:0;box-shadow:0 4px 12px rgba(15,169,104,0.35)}
+  .mark::after{content:"";position:absolute;inset:7px 7px auto auto;width:7px;height:7px;border-radius:50%;background:var(--white)}
+  .nav-links{display:flex;gap:30px;align-items:center;font-size:14.5px}
+  .nav-links a{color:var(--ink-soft);transition:color .2s;font-weight:500}
+  .nav-links a:hover{color:var(--green-deep)}
+  .btn{font-family:'Space Grotesk';font-weight:600;font-size:14.5px;padding:11px 22px;border-radius:11px;border:1px solid transparent;background:var(--grad);color:var(--white);transition:transform .15s, box-shadow .2s;cursor:pointer;display:inline-block;box-shadow:0 6px 18px rgba(15,169,104,0.28)}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(15,169,104,0.4)}
+  .btn-ghost{background:var(--white);border:1px solid var(--line-strong);color:var(--green-deep);box-shadow:var(--shadow-sm)}
+  .btn-ghost:hover{box-shadow:var(--shadow);border-color:var(--green)}
+  @media(max-width:760px){.nav-links{display:none}}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding:96px 0 80px}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:54px;align-items:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:0.5px;color:var(--green-deep);text-transform:uppercase;font-weight:500;background:var(--white);border:1px solid var(--line-strong);border-radius:100px;padding:8px 15px;margin-bottom:28px;box-shadow:var(--shadow-sm)}
+  .dot-live{width:7px;height:7px;border-radius:50%;background:var(--green-bright);box-shadow:0 0 0 0 rgba(22,201,125,0.6);animation:pulse 2.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,201,125,0.5)}70%{box-shadow:0 0 0 9px rgba(22,201,125,0)}100%{box-shadow:0 0 0 0 rgba(22,201,125,0)}}
+  h1{font-family:'Space Grotesk';font-weight:700;color:var(--ink);font-size:clamp(38px,5.4vw,64px);line-height:1.02;letter-spacing:-1.8px}
+  h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .lede{margin-top:24px;font-size:18.5px;color:var(--ink-soft);max-width:520px}
+  .hero-cta{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap}
+  .hero-stats{margin-top:46px;display:flex;gap:38px;flex-wrap:wrap}
+  .stat .n{font-family:'Space Grotesk';font-weight:700;font-size:27px;line-height:1;color:var(--green-deep)}
+  .stat .l{font-family:'JetBrains Mono';font-size:11.5px;color:var(--ink-soft);margin-top:8px;text-transform:uppercase;letter-spacing:0.4px}
+
+  /* ---------- RECEIPT ---------- */
+  .receipt{background:var(--white);border:1px solid var(--line-strong);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);position:relative}
+  .receipt-top{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px dashed var(--line-strong);background:var(--green-mist)}
+  .receipt-top .t{font-family:'JetBrains Mono';font-size:12px;letter-spacing:0.6px;color:var(--ink-soft);font-weight:500}
+  .chip{font-family:'JetBrains Mono';font-size:11px;padding:5px 11px;border-radius:7px;display:inline-flex;align-items:center;gap:6px;transition:all .4s;font-weight:700}
+  .chip.pending{background:#FFF4E0;color:#B5791A;border:1px solid #F0D9A8}
+  .chip.settled{background:var(--green-soft);color:var(--green-deep);border:1px solid var(--line-strong)}
+  .receipt-body{padding:24px}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .row:last-child{border-bottom:none}
+  .row .k{font-family:'JetBrains Mono';font-size:11.5px;color:var(--ink-soft);letter-spacing:0.3px}
+  .row .v{font-weight:500;color:var(--ink)}
+  .row .v.mono{font-family:'JetBrains Mono';font-size:12.5px}
+  .stamp{margin:0 24px 26px;padding:20px;border-radius:14px;border:1px dashed var(--line-strong);text-align:center;position:relative;transition:background .5s,border-color .5s;background:var(--green-mist)}
+  .stamp.on{background:var(--green-soft);border-color:var(--green);border-style:solid}
+  .stamp .lbl{font-family:'JetBrains Mono';font-size:11px;letter-spacing:1px;color:var(--ink-soft);text-transform:uppercase}
+  .stamp .amt{font-family:'Space Grotesk';font-weight:700;font-size:32px;margin-top:8px;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .stamp .sub{font-family:'JetBrains Mono';font-size:11px;color:var(--green-deep);margin-top:5px;opacity:0;transition:opacity .5s;font-weight:500}
+  .stamp.on .sub{opacity:1}
+
+  /* ---------- SECTION ---------- */
+  section{padding:96px 0;position:relative}
+  .sec-eyebrow{font-family:'JetBrains Mono';font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--green-deep);margin-bottom:18px;display:flex;align-items:center;gap:12px;font-weight:500}
+  .sec-eyebrow::before{content:"";width:26px;height:2px;background:var(--green);border-radius:2px}
+  h2{font-family:'Space Grotesk';font-weight:700;font-size:clamp(28px,3.6vw,44px);letter-spacing:-1.1px;line-height:1.08;max-width:780px;color:var(--ink)}
+  .sec-sub{margin-top:18px;font-size:17px;color:var(--ink-soft);max-width:620px}
+  .band{background:var(--green-mist);border-block:1px solid var(--line)}
+
+  /* ---------- PROBLEM ---------- */
+  .prob-grid{margin-top:50px;display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .prob{background:var(--white);padding:32px;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-sm);transition:transform .25s,box-shadow .25s}
+  .prob:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .prob .num{font-family:'JetBrains Mono';font-size:12px;color:var(--green);margin-bottom:14px;font-weight:700}
+  .prob h3{font-family:'Space Grotesk';font-weight:600;font-size:19px;margin-bottom:9px;letter-spacing:-0.3px;color:var(--ink)}
+  .prob p{font-size:14.5px;color:var(--ink-soft)}
+  @media(max-width:760px){.prob-grid{grid-template-columns:1fr}}
+
+  /* ---------- LAYERS ---------- */
+  .layers{margin-top:52px;display:flex;flex-direction:column;gap:18px}
+  .layer{display:grid;grid-template-columns:120px 1fr;gap:30px;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:32px 34px;align-items:start;transition:border-color .25s,transform .25s,box-shadow .25s;box-shadow:var(--shadow-sm)}
+  .layer:hover{border-color:var(--line-strong);transform:translateX(5px);box-shadow:var(--shadow)}
+  .layer .badge{font-family:'JetBrains Mono';font-size:11px;letter-spacing:1px;color:var(--white);background:var(--grad);padding:7px 11px;border-radius:8px;text-transform:uppercase;display:inline-block;white-space:nowrap;font-weight:700}
+  .layer h3{font-family:'Space Grotesk';font-weight:600;font-size:23px;letter-spacing:-0.4px;margin-bottom:10px;color:var(--ink)}
+  .layer p{color:var(--ink-soft);font-size:15px;max-width:680px}
+  .layer .tags{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+  .tag{font-family:'JetBrains Mono';font-size:11.5px;color:var(--green-deep);background:var(--green-soft);border:1px solid var(--line);padding:6px 12px;border-radius:100px;font-weight:500}
+  @media(max-width:680px){.layer{grid-template-columns:1fr;gap:16px}}
+
+  /* ---------- FLOW ---------- */
+  .flow{margin-top:52px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .step{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:26px 24px;position:relative;box-shadow:var(--shadow-sm)}
+  .step .s{font-family:'JetBrains Mono';font-size:12px;color:var(--green-deep);margin-bottom:14px;font-weight:700}
+  .step h4{font-family:'Space Grotesk';font-weight:600;font-size:16px;margin-bottom:8px;color:var(--ink)}
+  .step p{font-size:13.5px;color:var(--ink-soft)}
+  .step .arrow{position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--green);font-size:20px;z-index:2;font-weight:700}
+  @media(max-width:880px){.flow{grid-template-columns:repeat(2,1fr)}.step .arrow{display:none}}
+  @media(max-width:480px){.flow{grid-template-columns:1fr}}
+
+  /* ---------- FIT ---------- */
+  .fit-grid{margin-top:50px;display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .fit{border:1px solid var(--line);border-radius:18px;padding:30px;background:var(--white);box-shadow:var(--shadow-sm);transition:transform .25s,box-shadow .25s}
+  .fit:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .fit h3{font-family:'Space Grotesk';font-weight:600;font-size:18px;margin-bottom:10px;display:flex;gap:12px;align-items:center;color:var(--ink)}
+  .fit h3 .i{width:34px;height:34px;border-radius:10px;background:var(--green-soft);display:grid;place-items:center;font-size:16px;flex-shrink:0;border:1px solid var(--line)}
+  .fit p{font-size:14.5px;color:var(--ink-soft)}
+  @media(max-width:760px){.fit-grid{grid-template-columns:1fr}}
+
+  /* ---------- TOKEN ---------- */
+  .token{background:var(--grad);border-radius:24px;padding:54px 50px;margin-top:8px;position:relative;overflow:hidden;color:var(--white);box-shadow:0 30px 70px rgba(10,125,78,0.3)}
+  .token::before{content:"$WARD";position:absolute;right:-24px;bottom:-50px;font-family:'Space Grotesk';font-weight:700;font-size:210px;color:rgba(255,255,255,0.08);letter-spacing:-6px;pointer-events:none}
+  .token .sec-eyebrow{color:rgba(255,255,255,0.9)}
+  .token .sec-eyebrow::before{background:rgba(255,255,255,0.6)}
+  .token-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:38px;position:relative}
+  .tk h4{font-family:'JetBrains Mono';font-size:12px;color:var(--white);letter-spacing:0.5px;margin-bottom:10px;text-transform:uppercase;font-weight:700}
+  .tk p{font-size:14px;color:rgba(255,255,255,0.85)}
+  @media(max-width:760px){.token-grid{grid-template-columns:1fr 1fr}.token{padding:38px 28px}}
+
+  /* ---------- ROADMAP ---------- */
+  .road{margin-top:50px;border-left:2px solid var(--line-strong);padding-left:0}
+  .phase{display:grid;grid-template-columns:160px 1fr;gap:28px;padding:26px 0 26px 32px;position:relative;border-bottom:1px solid var(--line)}
+  .phase::before{content:"";position:absolute;left:-7px;top:32px;width:11px;height:11px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px var(--green-soft)}
+  .phase.now::before{background:var(--green-bright);box-shadow:0 0 0 5px rgba(22,201,125,0.22);animation:pulse 2.2s infinite}
+  .phase .ph{font-family:'JetBrains Mono';font-size:13px;color:var(--ink);font-weight:700}
+  .phase .when{font-family:'JetBrains Mono';font-size:11px;color:var(--green-deep);margin-top:4px}
+  .phase h4{font-family:'Space Grotesk';font-weight:600;font-size:17px;margin-bottom:6px;color:var(--ink)}
+  .phase p{font-size:14px;color:var(--ink-soft)}
+  @media(max-width:680px){.phase{grid-template-columns:1fr;gap:8px}}
+
+  /* ---------- CTA ---------- */
+  .final{text-align:center;padding:110px 0}
+  .final h2{margin:0 auto;text-align:center}
+  .final .lede{margin:18px auto 0}
+  .final-cta{margin-top:36px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .tagline{font-family:'Space Grotesk';font-weight:700;font-size:clamp(26px,4vw,42px);letter-spacing:-1px;margin-top:68px;color:var(--ink)}
+  .tagline .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line);padding:44px 0;background:var(--green-mist)}
+  .foot-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .foot-links{display:flex;gap:24px;font-size:14px;color:var(--ink-soft)}
+  .foot-links a:hover{color:var(--green-deep)}
+  .disclaimer{margin-top:26px;font-size:12px;color:var(--ink-soft);opacity:0.75;max-width:880px;line-height:1.6}
+
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:44px}.receipt{max-width:440px}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bg-waves" aria-hidden="true">
+  <svg viewBox="0 0 1440 900" preserveAspectRatio="none">
+    <path class="w1" fill="rgba(15,169,104,0.05)" d="M0,300 C320,220 560,420 880,340 C1140,275 1280,360 1440,310 L1440,900 L0,900 Z"/>
+    <path class="w2" fill="rgba(22,201,125,0.045)" d="M0,460 C300,380 620,560 920,470 C1180,395 1300,500 1440,450 L1440,900 L0,900 Z"/>
+    <path class="w3" fill="rgba(10,125,78,0.04)" d="M0,620 C360,540 640,700 960,610 C1200,545 1320,640 1440,600 L1440,900 L0,900 Z"/>
+  </svg>
+</div>
+<div class="bg-glow" aria-hidden="true">
+  <span class="glow g1"></span><span class="glow g2"></span><span class="glow g3"></span>
+</div>
+
+<nav>
+  <div class="wrap nav-inner">
+    <div class="logo"><span class="mark"></span>Solward</div>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#how">How it works</a>
+      <a href="#token">$WARD</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#join" class="btn">Launch on Kickstart</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot-live"></span>Built for the Solana builder economy</span>
+      <h1>Contributions settle in <span class="grad">trust.</span><br/>We make them settle <span class="grad">on-chain.</span></h1>
+      <p class="lede">Solward turns real work on Solana projects — code, content, design, community, capital — into verifiable reputation that earns rewards. The settlement layer for the people who build the ecosystem.</p>
+      <div class="hero-cta">
+        <a href="#join" class="btn">Become a founding contributor</a>
+        <a href="#how" class="btn btn-ghost">See how it works</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="n">10,000+</div><div class="l">Solana devs · #1 chain</div></div>
+        <div class="stat"><div class="n">~$0.001</div><div class="l">cost per attestation</div></div>
+        <div class="stat"><div class="n">400ms</div><div class="l">work + pay, one tx</div></div>
+      </div>
+    </div>
+
+    <div class="receipt" id="receipt">
+      <div class="receipt-top">
+        <span class="t">CONTRIBUTION RECEIPT</span>
+        <span class="chip pending" id="chip">● PENDING</span>
+      </div>
+      <div class="receipt-body">
+        <div class="row"><span class="k">CONTRIBUTOR</span><span class="v">leo.sol</span></div>
+        <div class="row"><span class="k">PROJECT</span><span class="v">TideFi · launched on Kickstart</span></div>
+        <div class="row"><span class="k">WORK</span><span class="v">Audit fix · PR #214 merged</span></div>
+        <div class="row"><span class="k">VERIFIER</span><span class="v mono">github-oracle ✓</span></div>
+        <div class="row"><span class="k">CATEGORY</span><span class="v">Engineering · +18 rep</span></div>
+      </div>
+      <div class="stamp" id="stamp">
+        <div class="lbl" id="stampLbl">Escrow · awaiting verification</div>
+        <div class="amt">1,200 USDC</div>
+        <div class="sub">Attestation minted · reputation updated · paid</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="sec-eyebrow">The gap</div>
+    <h2>Launching a token takes minutes. Proving you built it takes nothing — because there's no way to.</h2>
+    <p class="sec-sub">Launchpads removed the capital barrier. The bottleneck moved to credible contribution, and nobody built the rail for it.</p>
+    <div class="prob-grid">
+      <div class="prob"><div class="num">01</div><h3>Contributors are invisible</h3><p>Ship a critical PR, design a brand, write the thread that drives a launch — none of it follows you. Your reputation lives in scattered Discord roles and screenshots.</p></div>
+      <div class="prob"><div class="num">02</div><h3>Projects can't find or trust talent</h3><p>A founder fresh off a Kickstart launch has an idea and a token, but no reliable way to find a vetted contributor, prove the work, or pay for outcomes.</p></div>
+      <div class="prob"><div class="num">03</div><h3>Rewards are arbitrary</h3><p>Airdrops reward wallets, not work. Bounties get gamed. Grant committees move slowly. The value actually created is never priced.</p></div>
+      <div class="prob"><div class="num">04</div><h3>The launchpad era made it worse</h3><p>Thousands of ideas launch frictionlessly. Almost none can mobilize and reward the talent that would make them real.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="band">
+  <div class="wrap">
+    <div class="sec-eyebrow">The protocol</div>
+    <h2>Three layers that turn work into a record you own.</h2>
+    <p class="sec-sub">An open primitive at the base, a marketplace in the middle, compounding rewards on top.</p>
+    <div class="layers">
+      <div class="layer">
+        <div><span class="badge">Layer 1</span></div>
+        <div>
+          <h3>Proof of Contribution</h3>
+          <p>An open standard for attesting work on Solana. Every merged PR, published post, design delivery, or community milestone becomes a soulbound attestation tied to your wallet — issued by projects, peers, or automated oracles, and weighted by the issuer's own reputation. The result is a portable, composable reputation graph any app can read.</p>
+          <div class="tags"><span class="tag">soulbound attestations</span><span class="tag">github + content oracles</span><span class="tag">open on-chain graph</span></div>
+        </div>
+      </div>
+      <div class="layer">
+        <div><span class="badge">Layer 2</span></div>
+        <div>
+          <h3>The Contribution Market</h3>
+          <p>Projects post outcome-based bounties escrowed in USDC or their own token. Contributors apply with their Solward reputation as their resume — no cold DMs. On delivery, work is verified, the attestation mints, and escrow releases automatically. Reputation and payment settle in the same transaction.</p>
+          <div class="tags"><span class="tag">outcome bounties</span><span class="tag">auto-escrow</span><span class="tag">reputation-gated access</span></div>
+        </div>
+      </div>
+      <div class="layer">
+        <div><span class="badge">Layer 3</span></div>
+        <div>
+          <h3>Reputation Rewards</h3>
+          <p>Projects and ecosystem funds run retroactive reward rounds that pay the highest-impact contributors — scored objectively by the graph, not a closed committee. Your public Solward profile unlocks gated bounties, better rates, allowlists, and voting weight across any project that reads it.</p>
+          <div class="tags"><span class="tag">retroactive rounds</span><span class="tag">verifiable profile</span><span class="tag">cross-project weight</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-eyebrow">Walkthrough</div>
+    <h2>Maya launches TideFi on EasyA Kickstart. Here's what happens next.</h2>
+    <div class="flow">
+      <div class="step"><div class="s">01 · FUND</div><h4>Bounties from treasury</h4><p>Token's live, no team yet. Maya funds three bounties — audit fix, launch campaign, brand kit — straight from TideFi's treasury.</p><span class="arrow">→</span></div>
+      <div class="step"><div class="s">02 · BUILD</div><h4>Reputation = resume</h4><p>Leo's profile shows 14 verified PRs, so he's auto-approved for the gated audit bounty. He ships the fix.</p><span class="arrow">→</span></div>
+      <div class="step"><div class="s">03 · SETTLE</div><h4>Verify, mint, pay</h4><p>The oracle confirms the merge. Escrow releases USDC and mints a soulbound attestation — in one transaction.</p><span class="arrow">→</span></div>
+      <div class="step"><div class="s">04 · COMPOUND</div><h4>The flywheel turns</h4><p>A Foundation retro round later pays Leo automatically. His proof is public. The next founder finds him instantly.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="fit" class="band">
+  <div class="wrap">
+    <div class="sec-eyebrow">Why Solana, why now</div>
+    <h2>This only works here — and the timing only works now.</h2>
+    <div class="fit-grid">
+      <div class="fit"><h3><span class="i">⚡</span>The launchpad needs a labor layer</h3><p>Kickstart makes ideas instantly tradable. The natural next question — who builds the idea, and how do they get paid? — is exactly what Solward answers. Every launch becomes fundable with talent, not just capital.</p></div>
+      <div class="fit"><h3><span class="i">◇</span>Composable, not a walled garden</h3><p>The reputation graph is open on-chain data. Jupiter, Drift, Superteam, hackathon organizers, and any future app can read it. Solward grows the whole ecosystem instead of fencing off a corner.</p></div>
+      <div class="fit"><h3><span class="i">⏱</span>Only viable at Solana speed &amp; cost</h3><p>Sub-cent fees and sub-second finality make it economical to attest thousands of micro-contributions and settle micro-rewards — impossible on slower, costlier chains.</p></div>
+      <div class="fit"><h3><span class="i">▲</span>Rides the institutional wave</h3><p>As Mastercard, Worldpay, and Western Union build on the Solana Developer Platform, verifiable contributor reputation becomes infrastructure they need too: who can they trust to build, and how is it proven?</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="token">
+  <div class="wrap">
+    <div class="sec-eyebrow">The token</div>
+    <h2 style="margin-bottom:6px">$WARD aligns projects, contributors, and verifiers.</h2>
+    <p class="sec-sub">Fair launch, builder-aligned — in the spirit of Kickstart. No presale. A meaningful allocation reserved to reward contributors retroactively.</p>
+    <div class="token">
+      <div class="sec-eyebrow" style="margin:0">Utility &amp; governance</div>
+      <div class="token-grid">
+        <div class="tk"><h4>Stake to attest</h4><p>Verifiers and issuers stake $WARD to vouch for work. Bad attestations are slashable — the graph stays honest.</p></div>
+        <div class="tk"><h4>Reward rounds</h4><p>Funds and projects denominate retroactive rewards in $WARD or stablecoins routed through Solward.</p></div>
+        <div class="tk"><h4>Governance</h4><p>Holders set category weights, dispute rules, and treasury allocation across the protocol.</p></div>
+        <div class="tk"><h4>Access</h4><p>Top-reputation contributors and stakers unlock premium bounties and reduced fees.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap" class="band">
+  <div class="wrap">
+    <div class="sec-eyebrow">Roadmap</div>
+    <h2>From a working demo to the default reputation layer on Solana.</h2>
+    <div class="road">
+      <div class="phase now"><div><div class="ph">PHASE 0</div><div class="when">Now</div></div><div><h4>Proof</h4><p>Concept, brand, community, and a working demo of the proof-of-contribution standard on devnet.</p></div></div>
+      <div class="phase"><div><div class="ph">PHASE 1</div><div class="when">Mainnet</div></div><div><h4>The Market</h4><p>Launch the Contribution Market with USDC-escrowed outcome bounties and the first GitHub + content oracles. Onboard 25 launchpad-stage projects.</p></div></div>
+      <div class="phase"><div><div class="ph">PHASE 2</div><div class="when">Open data</div></div><div><h4>The Graph</h4><p>Open the reputation graph as public on-chain data with a read API and SDK, so any Solana app can integrate Solward profiles.</p></div></div>
+      <div class="phase"><div><div class="ph">PHASE 3</div><div class="when">Token</div></div><div><h4>Reward Rounds</h4><p>Run the first retroactive reward round with an ecosystem partner. Ship $WARD via fair launch.</p></div></div>
+      <div class="phase"><div><div class="ph">PHASE 4</div><div class="when">Standard</div></div><div><h4>The Standard</h4><p>Become the default contribution and reputation layer referenced by launchpads, grant programs, and DAOs across Solana.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="join" class="final">
+  <div class="wrap">
+    <div style="display:flex;justify-content:center"><span class="eyebrow"><span class="dot-live"></span>solward.xyz</span></div>
+    <h2>Build the chain. Own your record.</h2>
+    <p class="lede">Every PR, post, design, and late night becomes reputation you own and rewards you earn — anywhere in the ecosystem, forever.</p>
+    <div class="final-cta">
+      <a href="#" class="btn">Become a founding contributor</a>
+      <a href="https://kickstart.easya.io/" class="btn btn-ghost">Launch on EasyA Kickstart</a>
+    </div>
+    <div class="tagline">Build the chain. <span class="grad">Own your record.</span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="logo"><span class="mark"></span>Solward</div>
+      <div class="foot-links">
+        <a href="#problem">Problem</a>
+        <a href="#how">How it works</a>
+        <a href="#token">$WARD</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="https://kickstart.easya.io/">Kickstart</a>
+      </div>
+    </div>
+    <p class="disclaimer">Solward is a coordination and reputation protocol for the Solana ecosystem. $WARD is a utility and governance token — not an investment, equity, security, or a claim on revenue, ownership, or profit. There should be no expectation of return or appreciation. Participation is highly speculative and many early-stage ideas go nowhere. Nothing here is financial advice. Do your own research. © 2026 Solward · solward.xyz</p>
+  </div>
+</footer>
+
+<script>
+  const chip = document.getElementById('chip');
+  const stamp = document.getElementById('stamp');
+  const stampLbl = document.getElementById('stampLbl');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function settle(){chip.classList.remove('pending');chip.classList.add('settled');chip.textContent='✓ SETTLED';stamp.classList.add('on');stampLbl.textContent='Verified · paid · attestation minted';}
+  function reset(){chip.classList.remove('settled');chip.classList.add('pending');chip.textContent='● PENDING';stamp.classList.remove('on');stampLbl.textContent='Escrow · awaiting verification';}
+  if(reduce){settle();}
+  else{let on=false;setTimeout(()=>{settle();on=true;},1600);setInterval(()=>{on?reset():settle();on=!on;},3600);}
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity=1;e.target.style.transform='none';io.unobserve(e.target)}})},{threshold:0.12});
+  document.querySelectorAll('.prob,.layer,.step,.fit,.phase,.tk').forEach((el,i)=>{if(!reduce){el.style.opacity=0;el.style.transform='translateY(16px)';el.style.transition='opacity .5s ease '+(i%4*0.05)+'s, transform .5s ease '+(i%4*0.05)+'s';}io.observe(el);});
+</script>
+</body>
+</html>
