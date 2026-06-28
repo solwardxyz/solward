@@ -44,5 +44,6 @@ Ganti `<your-username>` dengan username GitHub kamu.
 
 ## Tips
 
-- Mau lihat dulu sebelum push? Buka `public/index.html` langsung di browser, atau jalankan `npm run dev`.
-- Setiap kali update, cukup: `git add . && git commit -m "update" && git push`. Website auto-update.
+- Mau lihat dulu sebelum push? Buka `public/index.html` langsung di browser, atau jalankan `npx serve public`.
+- Mau coba market preview-nya? `cd app && npm install && npm run dev`.
+- Setiap kali update, cukup: `git add . && git commit -m "update" && git push`. Website auto-update — workflow otomatis build landing page + app, lalu deploy. App muncul di `https://solward.xyz/app/`.

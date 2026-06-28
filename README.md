@@ -53,32 +53,47 @@ Read the full concept in the [**Lite Paper**](docs/litepaper.md).
 ```
 solward/
 ├── public/
-│   └── index.html          # Landing page (single-file, no build step)
+│   ├── index.html          # Landing page (single-file, no build step)
+│   └── CNAME               # Custom domain (solward.xyz)
+├── app/                     # Interactive market preview (React + Vite)
+│   ├── src/
+│   │   ├── SolwardApp.jsx    # The full Contributor + Founder demo
+│   │   └── main.jsx
+│   ├── index.html
+│   ├── vite.config.js
+│   └── package.json
 ├── docs/
 │   └── litepaper.md         # Full project concept & lite paper
-├── .github/
-│   └── workflows/
-│       └── deploy.yml        # Auto-deploy to GitHub Pages
+├── .github/workflows/
+│   └── deploy.yml            # Builds landing + app, deploys to GitHub Pages
 ├── README.md
+├── SETUP.md
+├── CONTRIBUTING.md
 ├── LICENSE
 └── .gitignore
 ```
 
+> **Note on the app.** The market in `app/` is an **interactive preview**: the full flow (post a bounty, apply with reputation, verify, settle, mint an attestation) works end-to-end in the browser, but it is **not yet on-chain**. Data resets on refresh, and there's a visible "Preview — launching soon" banner with a waitlist. The on-chain version (Solana smart contracts) is the next build phase.
+
 ## Run locally
 
-The landing page is a single, dependency-free HTML file. No build step required.
+**Landing page** — a single, dependency-free HTML file. No build step.
 
 ```bash
-# clone
 git clone https://github.com/<your-username>/solward.git
 cd solward
-
-# open directly
-open public/index.html        # macOS
-# or serve it
-npx serve public              # then visit http://localhost:3000
-python3 -m http.server -d public 8080   # alternative
+npx serve public          # then visit http://localhost:3000
 ```
+
+**The market preview (app)** — React + Vite.
+
+```bash
+cd app
+npm install
+npm run dev               # opens http://localhost:5173
+```
+
+Switch between the **Contributor** and **Founder** views with the toggle in the top bar. Try the full loop: post a bounty → apply with reputation → submit → watch it verify → settle, pay, and mint an attestation.
 
 ## Deploy
 
