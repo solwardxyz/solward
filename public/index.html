@@ -5,6 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Solward — The reputation layer for the Solana builder economy</title>
 <meta name="description" content="Solward turns real contributions to Solana projects into verifiable on-chain reputation that earns rewards. The settlement layer for builders." />
+<link rel="canonical" href="https://solward.xyz/" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0FA968" />
+<meta name="author" content="Solward" />
+<meta name="keywords" content="Solana, reputation, proof of contribution, web3, bounties, on-chain, builder economy, attestations" />
+
+<!-- Icons -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/favicon.svg" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Solward" />
+<meta property="og:url" content="https://solward.xyz/" />
+<meta property="og:title" content="Solward — The reputation layer for the Solana builder economy" />
+<meta property="og:description" content="Turn real contributions — code, content, design, community, capital — into verifiable on-chain reputation that earns rewards." />
+<meta property="og:image" content="https://solward.xyz/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Solward — the reputation & rewards layer for the Solana builder economy" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Solward — The reputation layer for the Solana builder economy" />
+<meta name="twitter:description" content="Turn real contributions — code, content, design, community, capital — into verifiable on-chain reputation that earns rewards." />
+<meta name="twitter:image" content="https://solward.xyz/og.png" />
+<meta name="twitter:image:alt" content="Solward — the reputation & rewards layer for the Solana builder economy" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet" />
@@ -72,7 +101,7 @@
   .btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(15,169,104,0.4)}
   .btn-ghost{background:var(--white);border:1px solid var(--line-strong);color:var(--green-deep);box-shadow:var(--shadow-sm)}
   .btn-ghost:hover{box-shadow:var(--shadow);border-color:var(--green)}
-  @media(max-width:760px){.nav-links{display:none}}
+  @media(max-width:760px){.nav-links{display:none}.nav-cta{padding:9px 16px;font-size:13.5px}}
 
   /* ---------- HERO ---------- */
   .hero{position:relative;padding:96px 0 80px}
@@ -192,6 +221,16 @@
   .disclaimer{margin-top:26px;font-size:12px;color:var(--ink-soft);opacity:0.75;max-width:880px;line-height:1.6}
 
   @media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:44px}.receipt{max-width:440px}}
+  @media(max-width:560px){
+    .wrap{padding:0 20px}
+    .hero{padding:60px 0 56px}
+    h1{font-size:clamp(30px,8.4vw,40px);letter-spacing:-0.8px;overflow-wrap:break-word}
+    .lede{font-size:16.5px}
+    .hero-stats{gap:24px}
+    section{padding:68px 0}
+    .token{padding:34px 22px}
+    .token::before{font-size:150px}
+  }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -216,8 +255,9 @@
       <a href="#how">How it works</a>
       <a href="#token">$WARD</a>
       <a href="#roadmap">Roadmap</a>
-      <a href="./app/" class="btn">Open the app</a>
+      <a href="https://github.com/solwardxyz/solward/blob/main/docs/litepaper.md" target="_blank" rel="noopener">Litepaper</a>
     </div>
+    <a href="./app/" class="btn nav-cta">Open the app</a>
   </div>
 </nav>
 
@@ -370,8 +410,8 @@
     <h2>Build the chain. Own your record.</h2>
     <p class="lede">Every PR, post, design, and late night becomes reputation you own and rewards you earn — anywhere in the ecosystem, forever.</p>
     <div class="final-cta">
-      <a href="#" class="btn">Become a founding contributor</a>
-      <a href="https://kickstart.easya.io/" class="btn btn-ghost">Launch on EasyA Kickstart</a>
+      <a href="./app/" class="btn">Try the live preview</a>
+      <a href="https://github.com/solwardxyz/solward" target="_blank" rel="noopener" class="btn btn-ghost">Become a founding contributor</a>
     </div>
     <div class="tagline">Build the chain. <span class="grad">Own your record.</span></div>
   </div>
@@ -382,11 +422,12 @@
     <div class="foot-inner">
       <div class="logo"><span class="mark"></span>Solward</div>
       <div class="foot-links">
-        <a href="#problem">Problem</a>
         <a href="#how">How it works</a>
         <a href="#token">$WARD</a>
         <a href="#roadmap">Roadmap</a>
-        <a href="https://kickstart.easya.io/">Kickstart</a>
+        <a href="https://github.com/solwardxyz/solward/blob/main/docs/litepaper.md" target="_blank" rel="noopener">Litepaper</a>
+        <a href="https://github.com/solwardxyz/solward" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://kickstart.easya.io/" target="_blank" rel="noopener">Kickstart</a>
       </div>
     </div>
     <p class="disclaimer">Solward is a coordination and reputation protocol for the Solana ecosystem. $WARD is a utility and governance token — not an investment, equity, security, or a claim on revenue, ownership, or profit. There should be no expectation of return or appreciation. Participation is highly speculative and many early-stage ideas go nowhere. Nothing here is financial advice. Do your own research. © 2026 Solward · solward.xyz</p>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  .card{
+    width:1200px;height:630px;position:relative;overflow:hidden;
+    background:linear-gradient(105deg,#0A7D4E,#16C97D);
+    font-family:'Space Grotesk',sans-serif;color:#fff;
+    padding:74px 80px;display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .watermark{
+    position:absolute;right:-30px;bottom:-90px;
+    font-weight:700;font-size:340px;letter-spacing:-12px;
+    color:rgba(255,255,255,0.09);pointer-events:none;line-height:1;
+  }
+  .glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:.45}
+  .glow1{width:560px;height:560px;background:radial-gradient(circle,rgba(255,255,255,.35),transparent 70%);top:-220px;left:-120px}
+  .glow2{width:480px;height:480px;background:radial-gradient(circle,rgba(10,125,78,.5),transparent 70%);bottom:-200px;right:18%}
+  .top{display:flex;align-items:center;gap:18px;position:relative;z-index:2}
+  .mark{width:54px;height:54px;border-radius:14px;background:#fff;position:relative;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+  .mark::after{content:"";position:absolute;top:12px;right:12px;width:12px;height:12px;border-radius:50%;background:#0A7D4E}
+  .word{font-weight:700;font-size:40px;letter-spacing:-1px}
+  .pill{margin-left:6px;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;letter-spacing:1px;
+    background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:7px 15px;border-radius:100px}
+  .mid{position:relative;z-index:2;max-width:880px}
+  h1{font-weight:700;font-size:64px;line-height:1.04;letter-spacing:-2px}
+  p{margin-top:26px;font-size:27px;line-height:1.4;color:rgba(255,255,255,.92);font-weight:500;max-width:820px}
+  .bottom{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
+  .url{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;letter-spacing:.5px}
+  .tags{display:flex;gap:12px}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:500;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:9px 16px;border-radius:100px}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="watermark">$WARD</div>
+    <span class="glow glow1"></span><span class="glow glow2"></span>
+    <div class="top">
+      <span class="mark"></span>
+      <span class="word">Solward</span>
+      <span class="pill">SOLANA</span>
+    </div>
+    <div class="mid">
+      <h1>The reputation &amp; rewards layer for the Solana builder economy.</h1>
+      <p>Turn real contributions — code, content, design, community, capital — into verifiable on-chain reputation that earns rewards.</p>
+    </div>
+    <div class="bottom">
+      <span class="url">solward.xyz</span>
+      <div class="tags">
+        <span class="tag">Proof of Contribution</span>
+        <span class="tag">On-chain reputation</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
