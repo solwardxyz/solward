@@ -70,8 +70,6 @@ export default function SolwardApp() {
   const [toast, setToast] = useState(null);
   const [detail, setDetail] = useState(null); // bounty being viewed
   const [showCreate, setShowCreate] = useState(false);
-  const [showWaitlist, setShowWaitlist] = useState(false);
-  const [bannerOpen, setBannerOpen] = useState(true);
 
   const flash = (msg) => { setToast(msg); setTimeout(() => setToast(null), 2600); };
 
@@ -173,25 +171,12 @@ export default function SolwardApp() {
         </div>
       </header>
 
-      {/* Preview banner */}
-      {bannerOpen && (
-        <div style={{ background: `linear-gradient(105deg,${G.deep},${G.bright})`, color: "#fff" }}>
-          <div style={{ maxWidth: 1100, margin: "0 auto", padding: "9px 22px", display: "flex", alignItems: "center", justifyContent: "center", gap: 12, flexWrap: "wrap", fontSize: 13 }}>
-            <Sparkles size={15} />
-            <span style={{ fontWeight: 500 }}>
-              Interactive preview — the market isn't on-chain yet. Try the full flow, then join the waitlist for launch.
-            </span>
-            <button className="btn sg" onClick={() => setShowWaitlist(true)} style={{ fontSize: 12, padding: "5px 13px", background: "rgba(255,255,255,.16)", color: "#fff", border: "1px solid rgba(255,255,255,.3)" }}>
-              Join waitlist
-            </button>
-            <button onClick={() => setBannerOpen(false)} style={{ background: "transparent", border: "none", cursor: "pointer", color: "rgba(255,255,255,.8)", display: "grid", placeItems: "center", padding: 2 }} aria-label="Dismiss">
-              <X size={15} />
-            </button>
-          </div>
-        </div>
-      )}
-
       <main style={{ maxWidth: 1100, margin: "0 auto", padding: "30px 22px 80px" }}>
+        {/* Preview banner — market goes live at mainnet */}
+        <div className="fade" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 22, padding: "12px 16px", borderRadius: 12, background: `linear-gradient(105deg,${G.soft},${G.mist})`, border: `1px solid ${G.line}` }}>
+          <span className="mono" style={{ fontSize: 10, fontWeight: 700, color: "#fff", background: `linear-gradient(105deg,${G.deep},${G.bright})`, padding: "3px 9px", borderRadius: 20, letterSpacing: .5 }}>SOON</span>
+          <span style={{ fontSize: 13, color: G.inkSoft }}>Interactive preview — the contribution market goes live on Solana <b style={{ color: G.ink }}>mainnet</b>. Try the full flow below.</span>
+        </div>
         {role === "contributor"
           ? <Contributor {...{ profile, bounties, apps, myApps, applyTo, submitWork, repTier, repTier2: repTier, setDetail }} />
           : <Founder {...{ bounties, setShowCreate, apps, setDetail }} />}
@@ -206,9 +191,6 @@ export default function SolwardApp() {
 
       {/* Create bounty modal */}
       {showCreate && <CreateModal onClose={() => setShowCreate(false)} onCreate={createBounty} />}
-
-      {/* Waitlist modal */}
-      {showWaitlist && <WaitlistModal onClose={() => setShowWaitlist(false)} onDone={() => { setShowWaitlist(false); flash("You're on the list — we'll reach out at launch"); }} />}
 
       {/* Toast */}
       {toast && (
@@ -518,46 +500,6 @@ function CreateModal({ onClose, onCreate }) {
           style={{ width: "100%", marginTop: 8, fontSize: 15, padding: "13px", background: valid ? `linear-gradient(105deg,${G.deep},${G.bright})` : G.soft, color: valid ? "#fff" : G.inkSoft }}>
           Escrow {f.amount || 0} USDC & post
         </button>
-      </div>
-    </div>
-  );
-}
-
-function WaitlistModal({ onClose, onDone }) {
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("Contributor");
-  const valid = /\S+@\S+\.\S+/.test(email);
-  return (
-    <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex: 55, background: "rgba(12,32,24,.45)", display: "grid", placeItems: "center", padding: 20 }}>
-      <div className="pop" onClick={e => e.stopPropagation()} style={{ background: "#fff", borderRadius: 18, padding: 28, width: 420, maxWidth: "94vw" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 34, height: 34, borderRadius: 9, background: `linear-gradient(105deg,${G.deep},${G.bright})`, display: "grid", placeItems: "center" }}><Sparkles size={17} color="#fff" /></div>
-            <h2 className="sg" style={{ fontSize: 19, fontWeight: 700 }}>Join the waitlist</h2>
-          </div>
-          <button className="btn" onClick={onClose} style={{ background: G.mist, padding: 8, borderRadius: 9 }}><X size={16} color={G.inkSoft} /></button>
-        </div>
-        <p style={{ fontSize: 13, color: G.inkSoft, margin: "12px 0 18px", lineHeight: 1.5 }}>
-          Solward's market launches on Solana soon. Get early access when the on-chain version goes live.
-        </p>
-        <Field label="Email">
-          <input value={email} onChange={e => setEmail(e.target.value)} placeholder="you@email.com" style={inp} />
-        </Field>
-        <Field label="I'm joining as">
-          <div style={{ display: "flex", gap: 8 }}>
-            {["Contributor", "Founder", "Both"].map(r => (
-              <button key={r} className="btn sg" onClick={() => setRole(r)}
-                style={{ flex: 1, fontSize: 12.5, padding: "8px", background: role === r ? `linear-gradient(105deg,${G.deep},${G.bright})` : G.mist, color: role === r ? "#fff" : G.inkSoft, border: `1px solid ${G.line}` }}>{r}</button>
-            ))}
-          </div>
-        </Field>
-        <button className="btn sg" disabled={!valid} onClick={onDone}
-          style={{ width: "100%", marginTop: 8, fontSize: 15, padding: "13px", background: valid ? `linear-gradient(105deg,${G.deep},${G.bright})` : G.soft, color: valid ? "#fff" : G.inkSoft }}>
-          Notify me at launch
-        </button>
-        <div className="mono" style={{ fontSize: 10.5, color: G.inkSoft, marginTop: 12, textAlign: "center", opacity: .75 }}>
-          Demo only · no email is actually stored
-        </div>
       </div>
     </div>
   );
