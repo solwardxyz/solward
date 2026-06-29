@@ -53,19 +53,19 @@ Read the full concept in the [**Lite Paper**](docs/litepaper.md).
 ```
 solward/
 ├── public/
-│   ├── index.html          # Landing page (single-file, no build step)
-│   └── CNAME               # Custom domain (solward.xyz)
-├── app/                     # Interactive market preview (React + Vite)
+│   ├── index.html
+│   └── CNAME
+├── app/
 │   ├── src/
-│   │   ├── SolwardApp.jsx    # The full Contributor + Founder demo
+│   │   ├── SolwardApp.jsx
 │   │   └── main.jsx
 │   ├── index.html
 │   ├── vite.config.js
 │   └── package.json
 ├── docs/
-│   └── litepaper.md         # Full project concept & lite paper
+│   └── litepaper.md
 ├── .github/workflows/
-│   └── deploy.yml            # Builds landing + app, deploys to GitHub Pages
+│   └── deploy.yml
 ├── README.md
 ├── SETUP.md
 ├── CONTRIBUTING.md
@@ -73,7 +73,7 @@ solward/
 └── .gitignore
 ```
 
-> **Note on the app.** The market in `app/` is an **interactive preview**: the full flow (post a bounty, apply with reputation, verify, settle, mint an attestation) works end-to-end in the browser, but it is **not yet on-chain**. Data resets on refresh, and there's a visible "Preview — launching soon" banner with a waitlist. The on-chain version (Solana smart contracts) is the next build phase.
+> **Note on the app.** The market in `app/` is an **interactive preview**: the full flow (post a bounty, apply with reputation, verify, settle, mint an attestation) works end-to-end in the browser, but it is **not yet on-chain**. Data resets on refresh, and there's a visible "Soon — goes live on Solana mainnet" banner. The on-chain version (Solana smart contracts) is the next build phase.
 
 ## Run locally
 
