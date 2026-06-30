@@ -109,28 +109,6 @@ npm run dev               # opens http://localhost:5173
 
 Switch between the **Contributor** and **Founder** views with the toggle in the top bar. Try the full loop: post a bounty → apply with reputation → submit → watch it verify → settle, pay, and mint an attestation.
 
-## Deploy
-
-The site is a hybrid: a static landing page (`public/`) plus a Vite app (`app/`). The build assembles both — landing at the root, app at `/app` — into a single `dist/` directory.
-
-```bash
-npm run build             # builds app/ and assembles dist/ (landing + app)
-```
-
-### Vercel (recommended)
-
-`vercel.json` is included, so Vercel needs no manual configuration.
-
-1. Import the repo at [vercel.com](https://vercel.com) → **Add New → Project**.
-2. Vercel reads `vercel.json` (build command + output `dist/`) automatically → **Deploy**.
-3. **Settings → Domains** → add your domain, then create the exact DNS records shown in your Vercel dashboard at your registrar. Vercel issues HTTPS automatically once DNS resolves.
-
-### GitHub Pages (alternative)
-
-A workflow in `.github/workflows/deploy.yml` builds the app and publishes the assembled site to Pages on every push to `main` (enable **Settings → Pages → Source: GitHub Actions**). The `public/CNAME` file sets the custom domain for this path.
-
-> A domain can only point to one host — use **either** Vercel **or** GitHub Pages for `solward.xyz`, not both.
-
 ---
 
 ## Roadmap
