@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--green:#0FA968;--deep:#0A7D4E;--bright:#16C97D;--soft:#E7F6EE;--mist:#F3FBF7;--ink:#0C2018;--inks:#3A5249;--line:rgba(15,169,104,.16);--lines:rgba(15,169,104,.28);--grad:linear-gradient(105deg,#0A7D4E,#16C97D)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:1070px;overflow:hidden;background:var(--mist)}
+  .c{width:1200px;height:1070px;padding:64px 70px;font-family:'Inter',sans-serif;color:var(--ink);position:relative}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:15px;letter-spacing:2px;color:var(--deep);font-weight:700;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .eyebrow::before{content:"";width:28px;height:3px;background:var(--green);border-radius:2px}
+  h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:46px;letter-spacing:-1.4px;margin-bottom:40px;line-height:1.05}
+  .layer{display:grid;grid-template-columns:130px 1fr;gap:30px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:34px 38px;align-items:start;box-shadow:0 10px 30px rgba(10,125,78,.07);margin-bottom:20px}
+  .badge{font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:1px;color:#fff;background:var(--grad);padding:9px 13px;border-radius:10px;text-transform:uppercase;font-weight:700;white-space:nowrap;display:inline-block}
+  .layer h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:30px;letter-spacing:-.5px;margin-bottom:12px}
+  .layer p{color:var(--inks);font-size:19px;line-height:1.5}
+  .tags{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--deep);background:var(--soft);border:1px solid var(--line);padding:7px 13px;border-radius:100px;font-weight:500}
+</style>
+</head>
+<body>
+  <div class="c">
+    <div class="eyebrow">THE PROTOCOL</div>
+    <h2>Three layers that turn work into a record you own</h2>
+
+    <div class="layer">
+      <div><span class="badge">Layer 1</span></div>
+      <div>
+        <h3>Proof of Contribution</h3>
+        <p>An open standard for attesting work on Solana. Every merged PR, post, design, or milestone becomes a soulbound attestation — a portable reputation graph any app can read.</p>
+        <div class="tags"><span class="tag">soulbound attestations</span><span class="tag">github + content oracles</span><span class="tag">open on-chain graph</span></div>
+      </div>
+    </div>
+
+    <div class="layer">
+      <div><span class="badge">Layer 2</span></div>
+      <div>
+        <h3>The Contribution Market</h3>
+        <p>Projects post outcome-based bounties escrowed in USDC or their token. Contributors apply with reputation as their resume. On delivery, work is verified, the attestation mints, and escrow releases — in one transaction.</p>
+        <div class="tags"><span class="tag">outcome bounties</span><span class="tag">auto-escrow</span><span class="tag">reputation-gated</span></div>
+      </div>
+    </div>
+
+    <div class="layer">
+      <div><span class="badge">Layer 3</span></div>
+      <div>
+        <h3>Reputation Rewards</h3>
+        <p>Retroactive reward rounds pay the highest-impact contributors, scored by the graph — not a closed committee. Your public profile unlocks gated bounties, better rates, and voting weight across the ecosystem.</p>
+        <div class="tags"><span class="tag">retroactive rounds</span><span class="tag">verifiable profile</span><span class="tag">cross-project weight</span></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

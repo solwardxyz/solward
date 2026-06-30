@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="public/favicon.svg" width="92" alt="Solward logo" />
+
 # Solward
 
 ### The reputation and rewards layer for the Solana builder economy
@@ -9,6 +11,10 @@ Turn real contributions to Solana projects — code, content, design, community,
 [**Website**](https://solward.xyz) · [**Lite Paper**](docs/litepaper.md) · [**EasyA Kickstart**](https://kickstart.easya.io/)
 
 ![status](https://img.shields.io/badge/status-Phase%200%20·%20Proof-0FA968) ![chain](https://img.shields.io/badge/chain-Solana-16C97D) ![license](https://img.shields.io/badge/license-MIT-0A7D4E)
+
+<br/>
+
+<img src="public/og.png" alt="Solward — turn real contributions into verifiable on-chain reputation that earns rewards" width="100%" />
 
 </div>
 
@@ -52,10 +58,12 @@ Read the full concept in the [**Lite Paper**](docs/litepaper.md).
 
 ```
 solward/
-├── public/
+├── public/                 # Static landing page (served at the domain root)
 │   ├── index.html
+│   ├── favicon.svg
+│   ├── og.png              # Social share image
 │   └── CNAME
-├── app/
+├── app/                    # Interactive market preview (React + Vite)
 │   ├── src/
 │   │   ├── SolwardApp.jsx
 │   │   └── main.jsx
@@ -63,9 +71,15 @@ solward/
 │   ├── vite.config.js
 │   └── package.json
 ├── docs/
-│   └── litepaper.md
+│   ├── litepaper.md
+│   └── articles/
+│       └── introducing-solward.md
+├── brand/                  # Logo, social avatar & banner assets
+├── scripts/                # HTML sources for generated images (OG, social, article)
 ├── .github/workflows/
 │   └── deploy.yml
+├── vercel.json             # Vercel build config (assembles landing + app)
+├── package.json
 ├── README.md
 ├── SETUP.md
 ├── CONTRIBUTING.md
@@ -80,7 +94,7 @@ solward/
 **Landing page** — a single, dependency-free HTML file. No build step.
 
 ```bash
-git clone https://github.com/<your-username>/solward.git
+git clone https://github.com/solwardxyz/solward.git
 cd solward
 npx serve public          # then visit http://localhost:3000
 ```
@@ -97,23 +111,25 @@ Switch between the **Contributor** and **Founder** views with the toggle in the 
 
 ## Deploy
 
-### GitHub Pages (included workflow)
+The site is a hybrid: a static landing page (`public/`) plus a Vite app (`app/`). The build assembles both — landing at the root, app at `/app` — into a single `dist/` directory.
 
-This repo ships with a workflow that publishes `public/` to GitHub Pages on every push to `main`.
+```bash
+npm run build             # builds app/ and assembles dist/ (landing + app)
+```
 
-1. Push this repo to GitHub.
-2. Go to **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-3. Push to `main`. Your site goes live at `https://<your-username>.github.io/solward/`.
+### Vercel (recommended)
 
-### Custom domain (solward.xyz)
+`vercel.json` is included, so Vercel needs no manual configuration.
 
-1. In **Settings → Pages → Custom domain**, enter `solward.xyz`.
-2. At your domain registrar, add a `CNAME` record pointing to `<your-username>.github.io`, or four `A` records to GitHub's Pages IPs.
-3. A `public/CNAME` file is included with `solward.xyz` — update it if your domain differs.
+1. Import the repo at [vercel.com](https://vercel.com) → **Add New → Project**.
+2. Vercel reads `vercel.json` (build command + output `dist/`) automatically → **Deploy**.
+3. **Settings → Domains** → add your domain, then create the exact DNS records shown in your Vercel dashboard at your registrar. Vercel issues HTTPS automatically once DNS resolves.
 
-### Vercel / Netlify
+### GitHub Pages (alternative)
 
-Point the project root to `public/` (output directory). No build command needed.
+A workflow in `.github/workflows/deploy.yml` builds the app and publishes the assembled site to Pages on every push to `main` (enable **Settings → Pages → Source: GitHub Actions**). The `public/CNAME` file sets the custom domain for this path.
+
+> A domain can only point to one host — use **either** Vercel **or** GitHub Pages for `solward.xyz`, not both.
 
 ---
 

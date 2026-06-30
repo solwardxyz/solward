@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1600px;height:900px;overflow:hidden}
+  .b{width:1600px;height:900px;position:relative;overflow:hidden;
+    background:linear-gradient(125deg,#0A7D4E 0%,#0FA968 52%,#16C97D 100%);
+    font-family:'Space Grotesk',sans-serif;color:#fff;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 130px}
+  .wm{position:absolute;right:-50px;bottom:-150px;font-weight:700;font-size:520px;letter-spacing:-20px;color:rgba(255,255,255,.07);line-height:1}
+  .glow{position:absolute;border-radius:50%;filter:blur(110px)}
+  .g1{width:680px;height:680px;background:radial-gradient(circle,rgba(255,255,255,.26),transparent 70%);top:-280px;left:-160px}
+  .g2{width:560px;height:560px;background:radial-gradient(circle,rgba(10,125,78,.5),transparent 70%);bottom:-240px;right:8%}
+  .waves{position:absolute;inset:0}
+  .eyebrow{position:relative;z-index:2;font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;letter-spacing:3px;
+    background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.32);padding:11px 22px;border-radius:100px;margin-bottom:36px}
+  h1{position:relative;z-index:2;font-weight:700;font-size:104px;line-height:.98;letter-spacing:-4px}
+  .sub{position:relative;z-index:2;margin-top:34px;font-size:34px;font-weight:500;color:rgba(255,255,255,.92);max-width:1120px;line-height:1.35}
+  .foot{position:absolute;bottom:60px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:18px;z-index:2}
+  .mark{width:46px;height:46px;border-radius:12px;background:#fff;position:relative}
+  .mark::after{content:"";position:absolute;top:10px;right:10px;width:11px;height:11px;border-radius:50%;background:linear-gradient(135deg,#0A7D4E,#16C97D)}
+  .word{font-weight:700;font-size:32px;letter-spacing:-1px}
+  .dotsep{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.55)}
+  .url{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700}
+</style>
+</head>
+<body>
+  <div class="b">
+    <div class="wm">$WARD</div>
+    <span class="glow g1"></span><span class="glow g2"></span>
+    <svg class="waves" viewBox="0 0 1600 900" preserveAspectRatio="none">
+      <path fill="rgba(255,255,255,0.05)" d="M0,600 C320,520 600,720 920,640 C1200,572 1380,650 1600,610 L1600,900 L0,900 Z"/>
+      <path fill="rgba(255,255,255,0.045)" d="M0,710 C340,650 660,770 980,700 C1240,646 1400,720 1600,690 L1600,900 L0,900 Z"/>
+    </svg>
+    <span class="eyebrow">PROOF OF CONTRIBUTION</span>
+    <h1>Introducing Solward</h1>
+    <p class="sub">The reputation &amp; rewards layer for the Solana builder economy.</p>
+    <div class="foot">
+      <span class="mark"></span><span class="word">Solward</span>
+      <span class="dotsep"></span><span class="url">solward.xyz</span>
+    </div>
+  </div>
+</body>
+</html>

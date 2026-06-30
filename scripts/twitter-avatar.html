@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:800px;height:800px;overflow:hidden}
+  .av{
+    width:800px;height:800px;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#0A7D4E 0%,#0FA968 55%,#16C97D 100%);
+    display:grid;place-items:center;
+  }
+  .waves{position:absolute;inset:0}
+  .glow{position:absolute;border-radius:50%;filter:blur(70px)}
+  .glow1{width:520px;height:520px;background:radial-gradient(circle,rgba(255,255,255,.30),transparent 70%);top:-160px;left:-120px}
+  .glow2{width:420px;height:420px;background:radial-gradient(circle,rgba(10,125,78,.55),transparent 70%);bottom:-150px;right:-120px}
+  .mark{
+    position:relative;width:368px;height:368px;border-radius:92px;background:#fff;
+    box-shadow:0 30px 70px rgba(6,60,40,.45), inset 0 2px 0 rgba(255,255,255,.6);
+    z-index:2;
+  }
+  .dot{
+    position:absolute;top:60px;right:60px;width:92px;height:92px;border-radius:50%;
+    background:linear-gradient(135deg,#0A7D4E,#16C97D);
+    box-shadow:0 8px 20px rgba(10,125,78,.35);
+  }
+</style>
+</head>
+<body>
+  <div class="av">
+    <svg class="waves" viewBox="0 0 800 800" preserveAspectRatio="none">
+      <path fill="rgba(255,255,255,0.06)" d="M0,560 C180,500 320,610 480,560 C620,516 700,560 800,540 L800,800 L0,800 Z"/>
+      <path fill="rgba(255,255,255,0.05)" d="M0,650 C200,600 360,700 540,650 C680,610 740,660 800,640 L800,800 L0,800 Z"/>
+    </svg>
+    <span class="glow glow1"></span><span class="glow glow2"></span>
+    <div class="mark"><span class="dot"></span></div>
+  </div>
+</body>
+</html>

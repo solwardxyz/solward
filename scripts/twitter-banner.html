@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1500px;height:500px;overflow:hidden}
+  .banner{
+    width:1500px;height:500px;position:relative;overflow:hidden;
+    background:linear-gradient(105deg,#0A7D4E 0%,#0FA968 50%,#16C97D 100%);
+    font-family:'Space Grotesk',sans-serif;color:#fff;
+  }
+  .watermark{
+    position:absolute;right:-40px;top:-60px;font-weight:700;font-size:430px;
+    letter-spacing:-16px;color:rgba(255,255,255,0.07);line-height:1;pointer-events:none;
+  }
+  .glow{position:absolute;border-radius:50%;filter:blur(90px)}
+  .glow1{width:560px;height:560px;background:radial-gradient(circle,rgba(255,255,255,.26),transparent 70%);top:-260px;left:380px}
+  .glow2{width:480px;height:480px;background:radial-gradient(circle,rgba(10,125,78,.5),transparent 70%);bottom:-220px;left:120px}
+  .waves{position:absolute;inset:0}
+
+  /* Brand lockup — top left */
+  .brand{position:absolute;top:54px;left:90px;display:flex;align-items:center;gap:20px;z-index:3}
+  .mark{width:58px;height:58px;border-radius:15px;background:#fff;position:relative;box-shadow:0 8px 22px rgba(6,60,40,.4)}
+  .mark::after{content:"";position:absolute;top:13px;right:13px;width:13px;height:13px;border-radius:50%;background:linear-gradient(135deg,#0A7D4E,#16C97D)}
+  .word{font-weight:700;font-size:42px;letter-spacing:-1px}
+  .pill{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;letter-spacing:1.5px;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);padding:8px 16px;border-radius:100px}
+
+  /* Headline block — centered, right of the avatar safe-zone */
+  .content{position:absolute;left:430px;top:50%;transform:translateY(-50%);z-index:3;max-width:1000px}
+  h1{font-weight:700;font-size:76px;line-height:1.0;letter-spacing:-2.5px}
+  h1 .light{color:rgba(255,255,255,.62)}
+  .sub{margin-top:24px;font-size:26px;font-weight:500;color:rgba(255,255,255,.92);max-width:880px;line-height:1.35}
+
+  /* URL + tags — bottom right (clear of avatar) */
+  .foot{position:absolute;right:90px;bottom:46px;display:flex;align-items:center;gap:14px;z-index:3}
+  .url{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;letter-spacing:.5px}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:500;
+    background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:9px 16px;border-radius:100px}
+</style>
+</head>
+<body>
+  <div class="banner">
+    <div class="watermark">$WARD</div>
+    <span class="glow glow1"></span><span class="glow glow2"></span>
+    <svg class="waves" viewBox="0 0 1500 500" preserveAspectRatio="none">
+      <path fill="rgba(255,255,255,0.05)" d="M0,330 C300,270 560,400 880,340 C1140,292 1300,360 1500,320 L1500,500 L0,500 Z"/>
+      <path fill="rgba(255,255,255,0.045)" d="M0,420 C320,370 620,470 940,410 C1180,366 1320,430 1500,400 L1500,500 L0,500 Z"/>
+    </svg>
+
+    <div class="brand">
+      <span class="mark"></span>
+      <span class="word">Solward</span>
+      <span class="pill">SOLANA</span>
+    </div>
+
+    <div class="content">
+      <h1>Build the chain.<br/><span class="light">Own your record.</span></h1>
+      <p class="sub">The reputation &amp; rewards layer for the Solana builder economy.</p>
+    </div>
+
+    <div class="foot">
+      <span class="tag">Proof of Contribution</span>
+      <span class="url">solward.xyz</span>
+    </div>
+  </div>
+</body>
+</html>

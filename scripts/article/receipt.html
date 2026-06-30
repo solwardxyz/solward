@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--green:#0FA968;--deep:#0A7D4E;--bright:#16C97D;--soft:#E7F6EE;--mist:#F3FBF7;--ink:#0C2018;--inks:#3A5249;--line:rgba(15,169,104,.16);--lines:rgba(15,169,104,.28);--grad:linear-gradient(105deg,#0A7D4E,#16C97D)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1100px;height:840px;overflow:hidden;background:var(--mist)}
+  .stage{width:1100px;height:840px;display:grid;place-items:center;position:relative;font-family:'Inter',sans-serif}
+  .glow{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(90px);background:radial-gradient(circle,rgba(22,201,125,.22),transparent 70%);top:-120px;right:-80px}
+  .receipt{width:620px;background:#fff;border:1px solid var(--lines);border-radius:24px;overflow:hidden;box-shadow:0 30px 70px rgba(10,125,78,.16);position:relative;z-index:2}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:24px 30px;border-bottom:1px dashed var(--lines);background:var(--mist)}
+  .top .t{font-family:'JetBrains Mono',monospace;font-size:15px;letter-spacing:.6px;color:var(--inks);font-weight:500}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;padding:7px 14px;border-radius:8px;background:var(--soft);color:var(--deep);border:1px solid var(--lines)}
+  .body{padding:14px 30px}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:17px}
+  .row:last-child{border-bottom:none}
+  .k{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--inks);letter-spacing:.3px}
+  .v{font-weight:600;color:var(--ink)}
+  .v.mono{font-family:'JetBrains Mono',monospace;font-size:15px}
+  .stamp{margin:6px 30px 32px;padding:26px;border-radius:18px;border:1.5px solid var(--green);background:var(--soft);text-align:center}
+  .lbl{font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:1px;color:var(--deep);text-transform:uppercase;font-weight:700}
+  .amt{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:46px;margin-top:10px;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .sub{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--deep);margin-top:8px;font-weight:500}
+</style>
+</head>
+<body>
+  <div class="stage">
+    <span class="glow"></span>
+    <div class="receipt">
+      <div class="top"><span class="t">CONTRIBUTION RECEIPT</span><span class="chip">✓ SETTLED</span></div>
+      <div class="body">
+        <div class="row"><span class="k">CONTRIBUTOR</span><span class="v">leo.sol</span></div>
+        <div class="row"><span class="k">PROJECT</span><span class="v">TideFi · launched on Kickstart</span></div>
+        <div class="row"><span class="k">WORK</span><span class="v">Audit fix · PR #214 merged</span></div>
+        <div class="row"><span class="k">VERIFIER</span><span class="v mono">github-oracle ✓</span></div>
+        <div class="row"><span class="k">CATEGORY</span><span class="v">Engineering · +18 rep</span></div>
+      </div>
+      <div class="stamp">
+        <div class="lbl">Verified · paid · attestation minted</div>
+        <div class="amt">1,200 USDC</div>
+        <div class="sub">settled in one transaction</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
