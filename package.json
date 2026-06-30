@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "npx serve public",
     "start": "npx serve public",
-    "serve": "python3 -m http.server -d public 8080"
+    "serve": "python3 -m http.server -d public 8080",
+    "build": "cd app && npm install && npm run build && cd .. && rm -rf dist && mkdir -p dist/app && cp -r public/. dist/ && cp -r app/dist/. dist/app/"
   },
   "keywords": [
     "solana",
