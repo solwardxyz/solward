@@ -81,7 +81,6 @@ solward/
 ├── vercel.json             # Vercel build config (assembles landing + app)
 ├── package.json
 ├── README.md
-├── SETUP.md
 ├── CONTRIBUTING.md
 ├── LICENSE
 └── .gitignore
