@@ -1,3 +1,4 @@
+// Deployed on Vercel (root: market/) with Output Directory = Next.js default.
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
