@@ -13,11 +13,11 @@ export function WalletBar() {
   return (
     <header className="topbar">
       <div className="wrap topbar-inner">
-        <Link href="/" className="brand">
+        <a href="https://solward.xyz" className="brand">
           <span className="mark" />
           Solward
           <span className="pill" style={{ marginLeft: 4 }}>MARKET</span>
-        </Link>
+        </a>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <Link href="/bounties/new" className="btn btn-ghost">Post a bounty</Link>
           <WalletMultiButton />
